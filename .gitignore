@@ -1,0 +1,63 @@
+# --- Python / 环境 ---
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# --- Node ---
+node_modules/
+npm-debug.log*
+
+# --- 系统 ---
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# --- 日志 / 运行时状态 ---
+*.log
+**/hook.log
+/tmp/
+**/queue/
+web-dashboard/data/queue/
+
+# --- IDE ---
+.vscode/
+.idea/
+*.iml
+
+# --- 编译产物 ---
+*.o
+*.bin
+firmware/.pio/
+firmware/.vscode/
+
+# --- 用户本地 hooks 配置（不入库） ---
+**/hooks.local.json
+
+# --- Agent 运行时状态（仅 example 入库） ---
+.state/WORK_REGISTRY.json
+.state/watchdog.*
+releases/**/JOB.json
+
+# --- 固件备份（4MB bin + 11MB elf 太大不入库，本地保留） ---
+.state/firmware-backup/
+.state/firmware-dump/
+
+# --- 大文件（GitHub 单文件上限 100MB） ---
+*.jsonl
+*.mat
+*.pt
+*.pth
+
+# PlatformIO
+.pio/
+.pioenvs/
+.piolibdeps/
+
+# 固件编译产物
+firmware/.pio/
+firmware/.pioenvs/

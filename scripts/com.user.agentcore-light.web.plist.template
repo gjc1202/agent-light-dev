@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- AgentCore-Light web 服务（状态聚合 + HTTP API）-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.user.agentcore-light.web</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>__NODE__</string>
+        <string>server.js</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>__WEB_DIR__</string>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>KeepAlive</key>
+    <true/>
+
+    <key>StandardOutPath</key>
+    <string>/tmp/agentcore-light-web.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/agentcore-light-web.log</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin</string>
+    </dict>
+</dict>
+</plist>
