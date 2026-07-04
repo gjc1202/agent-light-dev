@@ -159,21 +159,27 @@ WORKER_EOF
 chmod +x "$HOME/.cursor/hooks/hook-queue-worker.py"
 
 # Cursor hooks.json
-cat > "$HOME/.cursor/hooks.json" <<'HOOKS_EOF'
+#
+# 注意：command 必须用 **绝对路径**。早期版本写成相对路径 "./hooks/agentcore-light.sh"，
+# 但 Cursor 在 SSH 远程模式下，hook 进程的 cwd 是「当前 workspace 根目录」（如 /data/home/gjc/proj），
+# 不是 $HOME，导致 ./hooks/agentcore-light.sh 找不到、hook 静默失败、灯不响应。
+# 详见 findings/20260705_remote-ssh-hook-relative-path-bug.md。
+HOOK_SCRIPT="$HOME/.cursor/hooks/agentcore-light.sh"
+cat > "$HOME/.cursor/hooks.json" <<HOOKS_EOF
 {
   "version": 1,
   "hooks": {
-    "sessionStart":          [{ "command": "sh \"./hooks/agentcore-light.sh\"", "timeout": 5 }],
-    "sessionEnd":            [{ "command": "sh \"./hooks/agentcore-light.sh\"", "timeout": 5 }],
-    "beforeSubmitPrompt":    [{ "command": "sh \"./hooks/agentcore-light.sh\"", "timeout": 5 }],
-    "preToolUse":            [{ "command": "sh \"./hooks/agentcore-light.sh\"", "timeout": 5 }],
-    "postToolUse":           [{ "command": "sh \"./hooks/agentcore-light.sh\"", "timeout": 5 }],
-    "postToolUseFailure":    [{ "command": "sh \"./hooks/agentcore-light.sh\"", "timeout": 5 }],
-    "subagentStart":         [{ "command": "sh \"./hooks/agentcore-light.sh\"", "timeout": 5 }],
-    "subagentStop":          [{ "command": "sh \"./hooks/agentcore-light.sh\"", "timeout": 5 }],
-    "preCompact":            [{ "command": "sh \"./hooks/agentcore-light.sh\"", "timeout": 5 }],
-    "stop":                  [{ "command": "sh \"./hooks/agentcore-light.sh\"", "timeout": 5 }],
-    "afterAgentResponse":    [{ "command": "sh \"./hooks/agentcore-light.sh\"", "timeout": 5 }]
+    "sessionStart":          [{ "command": "sh \"$HOOK_SCRIPT\"", "timeout": 5 }],
+    "sessionEnd":            [{ "command": "sh \"$HOOK_SCRIPT\"", "timeout": 5 }],
+    "beforeSubmitPrompt":    [{ "command": "sh \"$HOOK_SCRIPT\"", "timeout": 5 }],
+    "preToolUse":            [{ "command": "sh \"$HOOK_SCRIPT\"", "timeout": 5 }],
+    "postToolUse":           [{ "command": "sh \"$HOOK_SCRIPT\"", "timeout": 5 }],
+    "postToolUseFailure":    [{ "command": "sh \"$HOOK_SCRIPT\"", "timeout": 5 }],
+    "subagentStart":         [{ "command": "sh \"$HOOK_SCRIPT\"", "timeout": 5 }],
+    "subagentStop":          [{ "command": "sh \"$HOOK_SCRIPT\"", "timeout": 5 }],
+    "preCompact":            [{ "command": "sh \"$HOOK_SCRIPT\"", "timeout": 5 }],
+    "stop":                  [{ "command": "sh \"$HOOK_SCRIPT\"", "timeout": 5 }],
+    "afterAgentResponse":    [{ "command": "sh \"$HOOK_SCRIPT\"", "timeout": 5 }]
   }
 }
 HOOKS_EOF
